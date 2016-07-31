@@ -1,5 +1,6 @@
 package linw.viewpagertabfragmentdemo;
 
+import android.graphics.drawable.Drawable;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -28,7 +29,7 @@ public class MainActivity extends AppCompatActivity {
         fragments.add(MainFragment.newInstance(2));
         MyFragmentPagerAdapter adapter = new MyFragmentPagerAdapter(getSupportFragmentManager(), fragments);
         mainViewPager.setAdapter(adapter);
-        mainViewPager.setSlide(true);
+        mainViewPager.setSlide(false);
         mainTabLayout.setupWithViewPager(mainViewPager);
         mainTabLayout.setTabMode(TabLayout.MODE_FIXED);
         for (int i = 0; i < mainTabLayout.getTabCount(); i++) {
@@ -38,6 +39,8 @@ public class MainActivity extends AppCompatActivity {
             }
         }
     }
+
+
 
     class MyFragmentPagerAdapter extends FragmentPagerAdapter {
 
@@ -70,6 +73,13 @@ public class MainActivity extends AppCompatActivity {
             LayoutInflater inflater = LayoutInflater.from(MainActivity.this);
             View view = inflater.inflate(R.layout.view_tab, null, false);
             TextView tvTab = (TextView) view.findViewById(R.id.tv_tab);
+            Drawable tvbg;
+            if (pagerIndex == 0) {
+                tvbg = getDrawable(R.drawable.tab_left_bg);
+            } else {
+                tvbg = getDrawable(R.drawable.tab_right_bg);
+            }
+            tvTab.setBackground(tvbg);
             tvTab.setText("第" + pagerIndex + "标签");
             return view;
         }
