@@ -2,35 +2,31 @@ package linw.viewpagertabfragmentdemo;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.BaseAdapter;
-import android.widget.Button;
-import android.widget.ListView;
 import android.widget.TextView;
 
-import org.w3c.dom.Text;
-
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
+
+import linw.viewpagertabfragmentdemo.base.BasePagerFragment;
 
 /**
  * 作者: linw
  * 时间: 16/7/25
  * 内容:
  */
-public class MainFragment extends Fragment implements View.OnTouchListener{
+public class MainFragment extends BasePagerFragment implements View.OnTouchListener {
 
     public static final String ARG_PAGE = "ARG_PAGE";
 
-    private ListView listView;
     private ViewPager pager;
+
     public static MainFragment newInstance(int pager) {
         MainFragment fragment = new MainFragment();
         Bundle arg = new Bundle();
@@ -44,6 +40,12 @@ public class MainFragment extends Fragment implements View.OnTouchListener{
     }
 
     @Override
+    public void fetchData() {
+        // TODO:  show data for user
+        Log.e("baseFragment", "BaseFragment fetchData");
+    }
+
+    @Override
     public boolean onTouch(View view, MotionEvent motionEvent) {
         return pager.dispatchTouchEvent(motionEvent);
 
@@ -53,8 +55,6 @@ public class MainFragment extends Fragment implements View.OnTouchListener{
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_main, null, false);
-//        listView = (ListView) view.findViewById(R.id.hori_list);
-//        listView.setAdapter(new MyAdapter());
         pager = (ViewPager) view.findViewById(R.id.view_pager);
         pager.setAdapter(new MyPagerAdapter());
         pager.setOffscreenPageLimit(5);
@@ -100,31 +100,4 @@ public class MainFragment extends Fragment implements View.OnTouchListener{
 //            super.destroyItem(container, position, object);
         }
     }
-    class MyAdapter extends BaseAdapter {
-        @Override
-        public int getCount() {
-            return 20;
-        }
-
-        @Override
-        public Object getItem(int i) {
-            return null;
-        }
-
-        @Override
-        public long getItemId(int i) {
-            return 0;
-        }
-
-        @Override
-        public View getView(int i, View view, ViewGroup viewGroup) {
-            LayoutInflater inflater = LayoutInflater.from(getActivity());
-            view = inflater.inflate(R.layout.view_time_axis, null, false);
-            TextView tv = (TextView) view.findViewById(R.id.tv_center);
-            tv.setText("NO." + i);
-            return view;
-        }
-    }
-
-
 }
